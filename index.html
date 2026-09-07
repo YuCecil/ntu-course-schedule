@@ -30,7 +30,16 @@
       min-height: 100vh;
     }
     .shell { width: min(1060px, calc(100% - 32px)); margin: 0 auto; padding: 34px 0 52px; }
-    header { margin: 0 6px 24px; }
+    header { position: relative; margin: 0 6px 30px; }
+    header::after {
+      content: "✦  ·  ✦";
+      display: inline-block;
+      margin-left: 18px;
+      color: #8c7650;
+      font-size: 17px;
+      letter-spacing: .22em;
+      transform: rotate(2deg);
+    }
     h1 {
       display: inline-block;
       margin: 0;
@@ -51,12 +60,25 @@
       gap: 19px;
     }
     .day {
+      position: relative;
       background: var(--panel);
       border: 2px solid var(--line);
       border-radius: 18px 11px 16px 12px / 12px 18px 11px 17px;
       padding: 16px;
       box-shadow: 4px 4px 0 rgba(64, 80, 90, .12);
     }
+    .day::before {
+      content: "";
+      position: absolute;
+      top: -8px;
+      left: 50%;
+      width: 72px;
+      height: 16px;
+      background: rgba(217, 187, 98, .42);
+      border: 1px solid rgba(125, 101, 44, .13);
+      transform: translateX(-50%) rotate(-2deg);
+    }
+    .day:nth-child(even)::before { transform: translateX(-50%) rotate(2.5deg); }
     .day:nth-child(even) { transform: rotate(.25deg); }
     .day:nth-child(odd) { transform: rotate(-.18deg); }
     .day-head { border-bottom: 2px dashed rgba(64, 80, 90, .55); padding: 1px 3px 10px; margin-bottom: 11px; }
@@ -76,12 +98,14 @@
     .meta span { display: flex; gap: 7px; align-items: baseline; }
     .icon { color: var(--ink); font-size: 11px; font-weight: 800; }
     @media (min-width: 1000px) {
-      .day:last-child { grid-column: 1 / -1; }
-      .day:last-child .course { width: calc(50% - 10px); }
+      .day:last-child { grid-column: 1 / -1; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
+      .day:last-child .day-head { grid-column: 1 / -1; margin-bottom: 0; }
+      .day:last-child .course { margin-top: 0; }
     }
     @media (max-width: 760px) {
       .shell { width: min(100% - 24px, 580px); padding: 25px 0 40px; }
       header { margin-bottom: 16px; }
+      header::after { margin-left: 10px; font-size: 14px; }
       h1 { font-size: 30px; }
       .week {
         grid-template-columns: 1fr;
@@ -138,13 +162,7 @@
 
       <article class="day">
         <div class="day-head"><h2>星期二</h2></div>
-        <section class="course"><div class="time">10:20–13:10</div><h3>中國婦女與性別史</h3><div class="meta"><span><b class="icon">老師</b>黃旨彥</span><span><b class="icon">教室</b>普 301</span></div></section>
         <section class="course"><div class="time">15:30–19:15</div><h3>生成式 AI：文字與圖像生成的原理與實務</h3><div class="meta"><span><b class="icon">老師</b>溫在弘／蔡炎龍</span><span><b class="icon">教室</b>計中 R206</span></div></section>
-      </article>
-
-      <article class="day">
-        <div class="day-head"><h2>星期三</h2></div>
-        <section class="course"><div class="time">13:20–16:20</div><h3>旅行文學與文化</h3><div class="meta"><span><b class="icon">老師</b>林淑慧</span><span><b class="icon">教室</b>和平 教403</span></div></section>
       </article>
 
       <article class="day">
