@@ -150,6 +150,17 @@
       .time { font-size: 13px; }
       .meta { font-size: 13px; }
     }
+    .trash { margin-top: 34px; }
+    .trash h2 { display: inline-block; margin: 0 0 14px 6px; font-size: 22px; letter-spacing: .04em; text-decoration: underline; text-decoration-color: var(--accent); text-decoration-thickness: 6px; text-underline-offset: -2px; text-decoration-skip-ink: none; }
+    .trash-grid { display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); gap: 10px; }
+    .tday { background: var(--panel); border: 2px solid var(--line); border-radius: 14px 9px 13px 10px / 10px 14px 9px 13px; padding: 12px 8px; text-align: center; box-shadow: 3px 3px 0 rgba(64, 80, 90, .12); }
+    .tday b { display: block; margin-bottom: 8px; padding-bottom: 6px; border-bottom: 2px dashed rgba(64, 80, 90, .45); font-size: 16px; }
+    .tday span { display: block; margin-top: 5px; color: var(--muted); font-size: 13px; line-height: 1.35; }
+    .tday.off { background: rgba(217, 187, 98, .22); }
+    .tday.off span { color: var(--ink); }
+    .trash-note { margin: 12px 6px 0; color: var(--muted); font-size: 12.5px; line-height: 1.6; }
+    @media (max-width: 760px) { .trash-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } .tday:last-child { grid-column: 1 / -1; } }
+    @media print { .trash-grid { grid-template-columns: repeat(7, 1fr); } .tday { box-shadow: none; padding: 6px 4px; } .tday span, .trash-note { font-size: 8px; } }
     @media print {
       body { background: white; }
       .shell { width: 100%; padding: 12px; }
@@ -181,6 +192,20 @@
         <div class="day-head"><h2>星期四</h2></div>
         <section class="course"><div class="time">10:20–13:10</div><h3>日本史</h3><div class="meta"><span><b class="icon">老師</b>郭珮君</span><span><b class="icon">教室</b>綜 603</span></div></section>
       </article>
+    </section>
+
+    <section class="trash" aria-label="台北市垃圾與資源回收">
+      <h2>台北市垃圾．資源回收</h2>
+      <div class="trash-grid">
+        <div class="tday"><b>星期一</b><span>一般垃圾</span><span>廚餘</span><span>平面類</span><span>其他類</span></div>
+        <div class="tday"><b>星期二</b><span>一般垃圾</span><span>廚餘</span><span>立體類</span><span>其他類</span></div>
+        <div class="tday off"><b>星期三</b><span>垃圾、回收</span><span>全部停收</span></div>
+        <div class="tday"><b>星期四</b><span>一般垃圾</span><span>廚餘</span><span>立體類</span><span>其他類</span></div>
+        <div class="tday"><b>星期五</b><span>一般垃圾</span><span>廚餘</span><span>平面類</span><span>其他類</span></div>
+        <div class="tday"><b>星期六</b><span>一般垃圾</span><span>廚餘</span><span>立體類</span><span>其他類</span></div>
+        <div class="tday off"><b>星期日</b><span>垃圾、回收</span><span>全部停收</span></div>
+      </div>
+      <p class="trash-note">平面類：廢紙、舊書、乾淨舊衣、乾淨塑膠袋。立體類：瓶罐、紙容器、小家電、3C 產品。其他類：燈管、電池、光碟片等。實際到站時間與地點依各里垃圾車路線為準，可至臺北市環保局「垃圾清運路線查詢」確認。</p>
     </section>
   </main>
 </body>
