@@ -150,17 +150,29 @@
       .time { font-size: 13px; }
       .meta { font-size: 13px; }
     }
-    .trash { margin-top: 34px; }
+    .trash { margin-top: 36px; }
     .trash h2 { display: inline-block; margin: 0 0 14px 6px; font-size: 22px; letter-spacing: .04em; text-decoration: underline; text-decoration-color: var(--accent); text-decoration-thickness: 6px; text-underline-offset: -2px; text-decoration-skip-ink: none; }
-    .trash-grid { display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); gap: 10px; }
-    .tday { background: var(--panel); border: 2px solid var(--line); border-radius: 14px 9px 13px 10px / 10px 14px 9px 13px; padding: 12px 8px; text-align: center; box-shadow: 3px 3px 0 rgba(64, 80, 90, .12); }
-    .tday b { display: block; margin-bottom: 8px; padding-bottom: 6px; border-bottom: 2px dashed rgba(64, 80, 90, .45); font-size: 16px; }
-    .tday span { display: block; margin-top: 5px; color: var(--muted); font-size: 13px; line-height: 1.35; }
-    .tday.off { background: rgba(217, 187, 98, .22); }
-    .tday.off span { color: var(--ink); }
-    .trash-note { margin: 12px 6px 0; color: var(--muted); font-size: 12.5px; line-height: 1.6; }
-    @media (max-width: 760px) { .trash-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } .tday:last-child { grid-column: 1 / -1; } }
-    @media print { .trash-grid { grid-template-columns: repeat(7, 1fr); } .tday { box-shadow: none; padding: 6px 4px; } .tday span, .trash-note { font-size: 8px; } }
+    .tgrid { display: grid; grid-template-columns: minmax(70px, 1.5fr) repeat(7, minmax(0, 1fr)); background: var(--panel); border: 2px solid var(--line); border-radius: 18px 11px 16px 12px / 12px 18px 11px 17px; box-shadow: 4px 4px 0 rgba(64, 80, 90, .12); overflow: hidden; }
+    .tgrid > div { display: flex; align-items: center; justify-content: center; min-height: 54px; border-bottom: 1.5px dashed rgba(64, 80, 90, .3); font-size: 15px; }
+    .tgrid > .h { min-height: 46px; border-bottom: 2px solid var(--line); font-weight: 800; font-size: 16px; }
+    .tgrid > .r { justify-content: flex-start; gap: 7px; padding-left: 12px; font-weight: 800; font-size: 14px; white-space: nowrap; }
+    .tgrid > .last { border-bottom: 0; }
+    .tgrid > .off { background: repeating-linear-gradient(135deg, rgba(64,80,90,.09) 0 6px, transparent 6px 12px); color: var(--muted); }
+    .tgrid > .today { box-shadow: inset 3px 0 0 var(--accent), inset -3px 0 0 var(--accent); background-color: rgba(217, 187, 98, .22); }
+    .tgrid > .h.today { background-color: var(--accent); box-shadow: none; }
+    .dot { width: 26px; height: 26px; border-radius: 50%; border: 2px solid var(--line); background: var(--c); box-shadow: 2px 2px 0 rgba(64,80,90,.18); }
+    .off-t { font-size: 12px; letter-spacing: .1em; writing-mode: vertical-rl; }
+    .tlegend { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px 14px; margin: 14px 6px 0; color: var(--muted); font-size: 13px; line-height: 1.5; }
+    .tlegend b { color: var(--ink); }
+    .trash-note { margin: 10px 6px 0; color: var(--muted); font-size: 12.5px; }
+    @media (max-width: 760px) {
+      .tgrid { grid-template-columns: 62px repeat(7, minmax(0, 1fr)); }
+      .tgrid > div { min-height: 46px; font-size: 13px; }
+      .tgrid > .h { font-size: 14px; }
+      .tgrid > .r { padding-left: 6px; gap: 3px; font-size: 12px; }
+      .dot { width: 20px; height: 20px; }
+      .tlegend { grid-template-columns: 1fr; }
+    }
     @media print {
       body { background: white; }
       .shell { width: 100%; padding: 12px; }
@@ -196,17 +208,19 @@
 
     <section class="trash" aria-label="台北市垃圾與資源回收">
       <h2>台北市垃圾．資源回收</h2>
-      <div class="trash-grid">
-        <div class="tday"><b>星期一</b><span>一般垃圾</span><span>廚餘</span><span>平面類</span><span>其他類</span></div>
-        <div class="tday"><b>星期二</b><span>一般垃圾</span><span>廚餘</span><span>立體類</span><span>其他類</span></div>
-        <div class="tday off"><b>星期三</b><span>垃圾、回收</span><span>全部停收</span></div>
-        <div class="tday"><b>星期四</b><span>一般垃圾</span><span>廚餘</span><span>立體類</span><span>其他類</span></div>
-        <div class="tday"><b>星期五</b><span>一般垃圾</span><span>廚餘</span><span>平面類</span><span>其他類</span></div>
-        <div class="tday"><b>星期六</b><span>一般垃圾</span><span>廚餘</span><span>立體類</span><span>其他類</span></div>
-        <div class="tday off"><b>星期日</b><span>垃圾、回收</span><span>全部停收</span></div>
+      <div class="tgrid" id="tgrid"><div class="h"></div><div class="h c0 " data-d="1">一</div><div class="h c1 " data-d="2">二</div><div class="h c2 off" data-d="3">三</div><div class="h c3 " data-d="4">四</div><div class="h c4 " data-d="5">五</div><div class="h c5 " data-d="6">六</div><div class="h c6 off" data-d="0">日</div><div class="r">🗑️ 垃圾</div><div class="" data-d="1"><i class="dot" style="--c:#9aa5ab"></i></div><div class="" data-d="2"><i class="dot" style="--c:#9aa5ab"></i></div><div class="off" data-d="3"></div><div class="" data-d="4"><i class="dot" style="--c:#9aa5ab"></i></div><div class="" data-d="5"><i class="dot" style="--c:#9aa5ab"></i></div><div class="" data-d="6"><i class="dot" style="--c:#9aa5ab"></i></div><div class="off" data-d="0"></div><div class="r">🍚 廚餘</div><div class="" data-d="1"><i class="dot" style="--c:#8fbf7a"></i></div><div class="" data-d="2"><i class="dot" style="--c:#8fbf7a"></i></div><div class="off" data-d="3"><span class="off-t">停收</span></div><div class="" data-d="4"><i class="dot" style="--c:#8fbf7a"></i></div><div class="" data-d="5"><i class="dot" style="--c:#8fbf7a"></i></div><div class="" data-d="6"><i class="dot" style="--c:#8fbf7a"></i></div><div class="off" data-d="0"><span class="off-t">停收</span></div><div class="r">📄 平面類</div><div class="" data-d="1"><i class="dot" style="--c:#6fa8d6"></i></div><div class="" data-d="2"></div><div class="off" data-d="3"></div><div class="" data-d="4"></div><div class="" data-d="5"><i class="dot" style="--c:#6fa8d6"></i></div><div class="" data-d="6"></div><div class="off" data-d="0"></div><div class="r">🥤 立體類</div><div class="" data-d="1"></div><div class="" data-d="2"><i class="dot" style="--c:#e8a25c"></i></div><div class="off" data-d="3"></div><div class="" data-d="4"><i class="dot" style="--c:#e8a25c"></i></div><div class="" data-d="5"></div><div class="" data-d="6"><i class="dot" style="--c:#e8a25c"></i></div><div class="off" data-d="0"></div><div class="r last">🔋 其他類</div><div class=" last" data-d="1"><i class="dot" style="--c:#c08bc9"></i></div><div class=" last" data-d="2"><i class="dot" style="--c:#c08bc9"></i></div><div class="off last" data-d="3"></div><div class=" last" data-d="4"><i class="dot" style="--c:#c08bc9"></i></div><div class=" last" data-d="5"><i class="dot" style="--c:#c08bc9"></i></div><div class=" last" data-d="6"><i class="dot" style="--c:#c08bc9"></i></div><div class="off last" data-d="0"></div></div>
+      <div class="tlegend">
+        <span>📄 <b>平面類</b>：廢紙、舊書、乾淨舊衣、乾淨塑膠袋</span>
+        <span>🥤 <b>立體類</b>：瓶罐、紙容器、小家電、3C</span>
+        <span>🔋 <b>其他類</b>：燈管、電池、光碟片等</span>
       </div>
-      <p class="trash-note">平面類：廢紙、舊書、乾淨舊衣、乾淨塑膠袋。立體類：瓶罐、紙容器、小家電、3C 產品。其他類：燈管、電池、光碟片等。實際到站時間與地點依各里垃圾車路線為準，可至臺北市環保局「垃圾清運路線查詢」確認。</p>
+      <p class="trash-note">週三、週日垃圾與回收全部停收。實際到站時間依各里垃圾車路線為準，可至臺北市環保局「垃圾清運路線查詢」確認。</p>
     </section>
+    <script>
+      document.querySelectorAll('#tgrid [data-d]').forEach(function (el) {
+        if (+el.dataset.d === new Date().getDay()) el.classList.add('today');
+      });
+    </script>
   </main>
 </body>
 </html>
